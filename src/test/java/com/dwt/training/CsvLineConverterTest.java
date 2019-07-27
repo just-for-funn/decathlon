@@ -14,6 +14,9 @@ class CsvLineConverterTest {
 
 
 
+    
+
+
     @Test
     void shouldConvertEventsInCorrectOrder(){
         CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
@@ -43,6 +46,15 @@ class CsvLineConverterTest {
 
         assertThat(scoreValues )
                 .containsExactly(12.61,5.00,9.22,1.50,60.39,16.43,21.60,2.60,35.81,25.72);
+    }
+
+    @Test
+    public void shouldReadScoresWithMinutes(){
+        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE);
+        double scoreWithMinutes = score.getScoreList().get(9).getScore();
+
+        assertThat(scoreWithMinutes)
+                .isEqualTo(325.72);
     }
 
 }

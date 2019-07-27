@@ -2,11 +2,10 @@ package com.dwt.training;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.SneakyThrows;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -40,8 +39,20 @@ public class CsvLineConverter {
     {
         return EventScore.builder()
                 .event(Event.values()[index-1])
-                .score(Double.parseDouble(score))
+                .score(this.convertScore(score))
                 .build();
+    }
+
+    @SneakyThrows
+    private double convertScore(String score) {
+        String [] splitted =score.split("\\.");
+        if(splitted.length == 3)
+        {
+            return  (Double.parseDouble(splitted[0]) * 60) + Double.parseDouble(splitted[1]) + (Double.parseDouble(splitted[2]) / 100);
+
+        }else{
+            return Double.parseDouble(score);
+        }
     }
 
     static UserScore convert(String line)
