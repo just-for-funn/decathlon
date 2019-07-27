@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import static com.dwt.training.Event.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CsvLineConverterTest {
     static String A_LINE = "John Smith;12.61;5.00;9.22;1.50;60.39;16.43;21.60;2.60;35.81;5.25.72";
@@ -14,7 +15,11 @@ class CsvLineConverterTest {
 
 
 
-    
+    @Test
+    void shouldThrowErrorWhenLineHasMissingValues(){
+        String invalidLine = "John Smith;12.61;5.00;9.22;1.50;60.39;16.43;21.60;2.60;35.81";
+        assertThrows(IllegalArgumentException.class , ()-> CsvLineConverter.convert(invalidLine));
+    }
 
 
     @Test

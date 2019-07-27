@@ -20,6 +20,8 @@ public class CsvLineConverter {
 
     UserScore convert(){
         String [] splitted = this.line.split(DELIMETER);
+        if(splitted.length != 11)
+            throw new IllegalArgumentException(String.format("Given csv line is not valid [ %s ]" , line));
         List<EventScore> scores = readScores(splitted);
 
         return UserScore.builder()
