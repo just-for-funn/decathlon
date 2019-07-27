@@ -36,11 +36,11 @@ public class CsvLineConverter {
                 .collect(Collectors.toList());
     }
 
-    private  EventScore convertEventScore(int index ,String s)
+    private  EventScore convertEventScore(int index ,String score)
     {
         return EventScore.builder()
                 .event(Event.values()[index-1])
-                .score(0.0)
+                .score(Double.parseDouble(score))
                 .build();
     }
 

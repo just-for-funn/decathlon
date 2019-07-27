@@ -10,12 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CsvLineConverterTest {
     static String A_LINE = "John Smith;12.61;5.00;9.22;1.50;60.39;16.43;21.60;2.60;35.81;5.25.72";
+    static String A_LINE_WITHOUT_MINUTES = "John Smith;12.61;5.00;9.22;1.50;60.39;16.43;21.60;2.60;35.81;25.72";
 
 
 
     @Test
     void shouldConvertEventsInCorrectOrder(){
-        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE);
+        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
         List<Event> events = score.getScoreList()
                 .stream()
                 .map(CsvLineConverter.EventScore::getEvent)
@@ -31,6 +32,17 @@ class CsvLineConverterTest {
                 POLE_VAULT,
                 JAVELIN_THROW,
                 METRES_1500);
+    }
+
+    @Test
+    public void shouldReadScoresWhenThereAreNoMinutes(){
+        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
+        List<Double> scoreValues = score.getScoreList().stream()
+                .map(CsvLineConverter.EventScore::getScore)
+                .collect(Collectors.toList());
+
+        assertThat(scoreValues )
+                .containsExactly(12.61,5.00,9.22,1.50,60.39,16.43,21.60,2.60,35.81,25.72);
     }
 
 }
