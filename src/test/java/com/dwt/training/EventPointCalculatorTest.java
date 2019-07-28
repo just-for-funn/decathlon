@@ -1,7 +1,6 @@
 package com.dwt.training;
 
 import com.dwt.training.event.Event;
-import com.dwt.training.event.EventFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,7 +16,7 @@ class EventPointCalculatorTest {
     @ParameterizedTest
     @MethodSource("scoreAndPoinst")
     public void shouldCalculatePoints(Event event , Double score ){
-        int points = event.calculate(event , score);
+        int points = event.calculatePoints(event , score);
         assertThat(points)
                 .isEqualTo(1000);
     }
@@ -40,21 +39,21 @@ class EventPointCalculatorTest {
 
     @Test
     public void shouldCalculateForLongJump(){
-        int points = longJump().calculate(longJump(), 7.76);
+        int points = longJump().calculatePoints(longJump(), 7.76);
         assertThat(points)
                 .isEqualTo(1000);
     }
 
     @Test
     public void shouldCalculateForHighJump(){
-        int points = highJump().calculate(highJump() , 2.20);
+        int points = highJump().calculatePoints(highJump() , 2.20);
         assertThat(points)
                 .isEqualTo(992);
     }
 
     @Test
     public void shouldCalculateForPoleValult(){
-        int points = poleVault().calculate(poleVault(), 5.28);
+        int points = poleVault().calculatePoints(poleVault(), 5.28);
         assertThat(points)
                 .isEqualTo(998);
     }

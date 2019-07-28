@@ -11,7 +11,7 @@ public class  Event
     private final EventType type;
     private PointConstants constants;
     private boolean isTracEvent;
-    Function<Double,Double> valueNormalizer;//meter to cm stuff
+    Function<Double,Double> valueNormalizer;//meter to cm kinda stuff
 
     Event(double A , double B, double C , boolean isTracEvent , EventType eventType) {
         this.constants = new PointConstants(A , B , C);
@@ -27,7 +27,7 @@ public class  Event
         this.valueNormalizer = valueNormalizer;
     }
 
-    public int calculate(Event event, double score)
+    public int calculatePoints(double score)
     {
 
         double normalizedScore = valueNormalizer.apply(score);
@@ -36,9 +36,9 @@ public class  Event
         if(this.isTracEvent())
             diff = this.getConstants().B -normalizedScore;
         else
-            diff = normalizedScore - event.getConstants().B;
+            diff = normalizedScore - getConstants().B;
 
-        return (int)(Math.pow( diff , event.getConstants().C) * event.getConstants().A);
+        return (int)(Math.pow( diff ,getConstants().C) * getConstants().A);
     }
 
 
