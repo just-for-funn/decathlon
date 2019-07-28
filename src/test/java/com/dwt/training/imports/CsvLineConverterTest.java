@@ -1,4 +1,4 @@
-package com.dwt.training;
+package com.dwt.training.imports;
 
 import com.dwt.training.event.Event;
 import com.dwt.training.event.EventType;
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.dwt.training.event.Event.*;
 import static com.dwt.training.event.EventType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,10 +26,10 @@ class CsvLineConverterTest {
 
     @Test
     void shouldConvertEventsInCorrectOrder(){
-        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
-        List<EventType> events = score.getScoreList()
+        UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
+        List<EventType> events = score.getScores()
                 .stream()
-                .map(CsvLineConverter.EventScore::getEvent)
+                .map(EventScore::getEvent)
                 .map(Event::getType)
                 .collect(Collectors.toList());
         assertThat(events).containsExactly(
@@ -48,9 +47,9 @@ class CsvLineConverterTest {
 
     @Test
     public void shouldReadScoresWhenThereAreNoMinutes(){
-        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
-        List<Double> scoreValues = score.getScoreList().stream()
-                .map(CsvLineConverter.EventScore::getScore)
+        UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
+        List<Double> scoreValues = score.getScores().stream()
+                .map(EventScore::getScore)
                 .collect(Collectors.toList());
 
         assertThat(scoreValues )
@@ -59,8 +58,8 @@ class CsvLineConverterTest {
 
     @Test
     public void shouldReadScoresWithMinutes(){
-        CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE);
-        double scoreWithMinutes = score.getScoreList().get(9).getScore();
+        UserScore score = CsvLineConverter.convert(A_LINE);
+        double scoreWithMinutes = score.getScores().get(9).getScore();
 
         assertThat(scoreWithMinutes)
                 .isEqualTo(325.72);

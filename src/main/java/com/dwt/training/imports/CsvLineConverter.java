@@ -1,12 +1,9 @@
-package com.dwt.training;
+package com.dwt.training.imports;
 
 import com.dwt.training.event.Event;
-import lombok.Builder;
-import lombok.Data;
 import lombok.SneakyThrows;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -41,8 +38,8 @@ public class CsvLineConverter {
         List<EventScore> scores = readScores(splitted);
 
         return UserScore.builder()
-                .name(splitted[0])
-                .scoreList(scores)
+                .user(splitted[0])
+                .scores(scores)
                 .build();
     }
 
@@ -73,23 +70,10 @@ public class CsvLineConverter {
         }
     }
 
-    static UserScore convert(String line)
+    public static UserScore convert(String line)
     {
         return new CsvLineConverter(line).convert();
     }
 
 
-    @Builder
-    @Data
-    static class UserScore{
-        private String name;
-        private List<EventScore> scoreList = Collections.emptyList();
-    }
-
-    @Builder
-    @Data
-    static class EventScore{
-        private Event event;
-        private double score;
-    }
 }
