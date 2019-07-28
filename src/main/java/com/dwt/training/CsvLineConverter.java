@@ -1,19 +1,35 @@
 package com.dwt.training;
 
+import com.dwt.training.event.Event;
 import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static com.dwt.training.event.EventFactory.*;
 
 public class CsvLineConverter {
 
     public static final String DELIMETER = ";";
     String line;
 
+    List<Event> eventsToRead = Arrays.asList(
+            metres100(),
+            longJump(),
+            shotPut(),
+            highJump(),
+            metres400(),
+            metresHurdles100(),
+            discusThrow(),
+            poleVault(),
+            javelinThrow(),
+            metres1500()
+    );
     public CsvLineConverter(String line) {
         this.line = line;
     }
@@ -40,7 +56,7 @@ public class CsvLineConverter {
     private  EventScore convertEventScore(int index ,String score)
     {
         return EventScore.builder()
-                .event(Event.values()[index-1])
+                .event(eventsToRead.get(index-1))
                 .score(this.convertScore(score))
                 .build();
     }

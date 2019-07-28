@@ -1,11 +1,14 @@
 package com.dwt.training;
 
+import com.dwt.training.event.Event;
+import com.dwt.training.event.EventType;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.dwt.training.Event.*;
+import static com.dwt.training.event.Event.*;
+import static com.dwt.training.event.EventType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,9 +28,10 @@ class CsvLineConverterTest {
     @Test
     void shouldConvertEventsInCorrectOrder(){
         CsvLineConverter.UserScore score = CsvLineConverter.convert(A_LINE_WITHOUT_MINUTES);
-        List<Event> events = score.getScoreList()
+        List<EventType> events = score.getScoreList()
                 .stream()
                 .map(CsvLineConverter.EventScore::getEvent)
+                .map(Event::getType)
                 .collect(Collectors.toList());
         assertThat(events).containsExactly(
                 METRES_100,
