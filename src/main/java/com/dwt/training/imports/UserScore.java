@@ -11,4 +11,10 @@ import java.util.List;
 public class UserScore {
     private String user;
     private List<EventScore> scores = Collections.emptyList();
+
+    public int getTotalPoints() {
+        return scores.stream()
+                .map(ev-> ev.getEvent().calculatePoints(ev.getScore()))
+                .reduce(0 , (a,b)-> a+b);
+    }
 }

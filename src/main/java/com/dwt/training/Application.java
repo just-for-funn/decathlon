@@ -1,5 +1,8 @@
 package com.dwt.training;
 
+import com.dwt.training.exports.imp.XmlExporter;
+import com.dwt.training.imports.imp.CsvFileImporter;
+
 public class Application {
 
 
@@ -9,11 +12,12 @@ public class Application {
             printHelp();
             return;
         }
-        doConversion();
+        doConversion(args[0]);
     }
 
-    private static void doConversion() {
-       System.out.println("Not implemented yet.");
+    private static void doConversion(String fileName) {
+       new DecathlonConverter(new CsvFileImporter() , new XmlExporter() , fileName , "decathlon.xml" ).convert();
+       System.out.println("DONE");
     }
 
     private static void printHelp() {
