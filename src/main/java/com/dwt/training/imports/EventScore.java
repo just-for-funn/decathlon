@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-class EventScore {
+public class EventScore {
     private Event event;
     private double score;
 }

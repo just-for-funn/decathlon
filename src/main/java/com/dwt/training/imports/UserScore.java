@@ -8,7 +8,7 @@ import java.util.List;
 
 @Builder
 @Data
-class UserScore {
+public class UserScore {
     private String user;
     private List<EventScore> scores = Collections.emptyList();
 }

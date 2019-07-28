@@ -1,6 +1,8 @@
-package com.dwt.training.imports;
+package com.dwt.training.imports.imp;
 
 import com.dwt.training.event.Event;
+import com.dwt.training.imports.EventScore;
+import com.dwt.training.imports.UserScore;
 import lombok.SneakyThrows;
 
 import java.util.Arrays;
