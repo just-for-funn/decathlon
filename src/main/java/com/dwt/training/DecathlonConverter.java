@@ -36,18 +36,26 @@ public class DecathlonConverter {
     }
 
     private List<UserPosition> mapToExportable(List<UserScore> importFromFile) {
-        List<UserPosition> mapped = importFromFile.stream().map(this::convert)
+        List<UserPosition> mapped = convertAll(importFromFile);
+        setPositions(mapped);
+        return mapped;
+    }
+
+    private List<UserPosition> convertAll(List<UserScore> importFromFile) {
+        return importFromFile.stream().map(this::convert)
                 .collect(Collectors.toList());
+    }
+
+    private void setPositions(List<UserPosition> mapped) {
         List<Integer> points = mapped.stream().map(UserPosition::getPoints).collect(Collectors.toList());
-        
+
         PositionCalculator pc =  new PositionCalculator();
-        
+
         List<List<Integer>> positions = pc.getPositions(points);
 
         for (int i = 0; i < mapped.size(); i++) {
             mapped.get(i).setPosition(positions.get(i));
         }
-        return mapped;
     }
 
     private UserPosition convert(UserScore userScore) {
